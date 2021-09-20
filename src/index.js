@@ -10,6 +10,7 @@ export default class AnimatedLoader extends React.PureComponent {
     animationType: 'none',
     source: require('./loader.json'),
     animationStyle: {},
+    onRequestClose: () => { },
     speed: 1,
     loop: true,
   };
@@ -18,6 +19,7 @@ export default class AnimatedLoader extends React.PureComponent {
     visible: PropTypes.bool,
     overlayColor: PropTypes.string,
     animationType: PropTypes.oneOf(['none', 'slide', 'fade']),
+    onRequestClose: PropTypes.func,
     source: PropTypes.object,
     animationStyle: ViewPropTypes.style,
     speed: PropTypes.number,
@@ -55,7 +57,7 @@ export default class AnimatedLoader extends React.PureComponent {
   };
 
   render() {
-    const { visible, overlayColor, animationType } = this.props;
+    const { visible, overlayColor, animationType, onRequestClose } = this.props;
 
     return (
       <Modal
@@ -63,7 +65,7 @@ export default class AnimatedLoader extends React.PureComponent {
         visible={visible}
         animationType={animationType}
         supportedOrientations={['portrait']}
-        onRequestClose={() => {}}
+        onRequestClose={onRequestClose}
       >
         <View style={[styles.container, { backgroundColor: overlayColor }]}>
           <View>{this._renderLottie()}</View>
